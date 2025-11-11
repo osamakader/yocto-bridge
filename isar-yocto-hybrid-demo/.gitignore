@@ -3,6 +3,8 @@ build/
 tmp/
 sstate-cache/
 downloads/
+integration/local-apt/dists/
+integration/local-apt/pool/
 
 # External layers cloned by kas
 isar/

@@ -1,0 +1,34 @@
+header:
+  version: 12
+  includes:
+    - repo: isar
+      file: kas/isar.yaml
+    - repo: isar
+      file: kas/distro/debian-bookworm.yaml
+    - repo: isar
+      file: kas/machine/qemuarm64.yaml
+    - repo: isar
+      file: kas/image/isar-image-base.yaml
+    - repo: isar
+      file: kas/opt/mirror-debian.yaml
+    - repo: isar
+      file: kas/package/packages-distro.yaml
+
+machine: qemuarm64
+
+repos:
+  isar:
+    url: https://github.com/ilbers/isar
+    refspec: master
+    path: isar
+
+local_conf_header:
+  mirrors: |
+    MIRROR_DEBIAN_URL = "http://deb.debian.org/debian"
+    MIRROR_DEBIAN_SECURITY_URL = "http://deb.debian.org/debian-security"
+    MIRROR_DEBIAN_BACKPORTS_URL = "http://deb.debian.org/debian"
+  kernel: |
+    DISTRO_KERNELS ?= "arm64"
+    KAS_IMAGE_PREINSTALL = "linux-image-arm64"
+
+target: isar-image-base
