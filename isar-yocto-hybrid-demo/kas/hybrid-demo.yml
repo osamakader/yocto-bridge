@@ -1,0 +1,49 @@
+header:
+  version: 12
+  includes:
+    - repo: isar
+      file: kas/isar.yaml
+
+machine: qemuarm64
+
+repos:
+  isar:
+    url: https://github.com/ilbers/isar
+    refspec: master
+    path: isar
+  poky:
+    url: https://git.yoctoproject.org/poky
+    refspec: langdale
+    path: poky
+  meta-virtualization:
+    url: https://git.yoctoproject.org/meta-virtualization
+    refspec: master
+    path: layers/meta-virtualization
+  meta-hybrid-demo:
+    url: .
+    refspec: HEAD
+    path: meta-hybrid-demo
+
+bblayers_conf_header:
+  hybrid-layers: |
+    BBLAYERS += " \
+      ${WORKDIR}/poky/meta \
+      ${WORKDIR}/poky/meta-poky \
+      ${WORKDIR}/poky/meta-yocto-bsp \
+      ${WORKDIR}/layers/meta-virtualization \
+      ${WORKDIR}/meta-hybrid-demo \
+    "
+
+local_conf_header:
+  hybrid-settings: |
+    DISTRO ?= "isar-debian"
+    ISAR_DEBIAN_RELEASE ?= "bookworm"
+    ISAR_ENABLE_DEB_CACHE = "1"
+    PACKAGE_CLASSES = "package_deb"
+    ACCEPT_EULA = "0"
+
+    # Recipes to rebuild from source using Yocto layers.
+    HYBRID_REBUILD_PN ?= "containerd"
+    SRC_URI:append:pn-linux-yocto = " file://rt-kernel.cfg"
+
+target: isar-image-base

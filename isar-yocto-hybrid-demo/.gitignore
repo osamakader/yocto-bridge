@@ -1,0 +1,18 @@
+# Build artifacts
+build/
+tmp/
+sstate-cache/
+downloads/
+
+# External layers cloned by kas
+isar/
+poky/
+layers/
+
+# Log files and caches
+cache/
+*.log
+*.tmp
+
+# Python caches
+__pycache__/
