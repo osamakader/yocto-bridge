@@ -1,0 +1,24 @@
+# Ignore build artifacts
+build/
+build-yocto/
+build-isar/
+tmp/
+sstate-cache/
+downloads/
+
+# Large cloned repos
+isar/
+poky/
+layers/
+
+# Git and editor metadata
+.git/
+.gitignore
+.dockerignore
+.vscode/
+.idea/
+
+# Python caches
+__pycache__/
+*.pyc
+

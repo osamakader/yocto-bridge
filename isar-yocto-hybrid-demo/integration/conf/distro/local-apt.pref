@@ -1,0 +1,4 @@
+Package: busybox
+Pin: origin "hybrid-local"
+Pin-Priority: 1100
+

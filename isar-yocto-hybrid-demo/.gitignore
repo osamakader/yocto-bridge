@@ -1,5 +1,7 @@
 # Build artifacts
 build/
+build-yocto/
+build-isar/
 tmp/
 sstate-cache/
 downloads/

@@ -6,29 +6,34 @@ machine: qemuarm64
 repos:
   poky:
     url: https://git.yoctoproject.org/poky
-    refspec: langdale
+    branch: langdale
     path: poky
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
   meta-hybrid-demo:
-    url: https://github.com/osamakader/yocto-isar-labs/isar-yocto-hybrid-demo/meta-hybrid-demo
-    refspec: master
+    url: https://github.com/osamakader/meta-hybrid-demo
+    branch: master
     path: meta-hybrid-demo
-
-bblayers_conf_header:
-  hybrid-layers: |
-    BBLAYERS += " \
-      ${TOPDIR}/../poky/meta \
-      ${TOPDIR}/../poky/meta-poky \
-      ${TOPDIR}/../poky/meta-yocto-bsp \
-      ${TOPDIR}/../meta-hybrid-demo \
-    "
-
+    layers:
+      .:
 local_conf_header:
   hybrid-settings: |
     ISAR_DEBIAN_RELEASE ?= "bookworm"
     ISAR_ENABLE_DEB_CACHE = "1"
     PACKAGE_CLASSES = "package_deb"
     ACCEPT_EULA = "0"
+    TMPDIR = "${TOPDIR}/tmp"
+    
+    # Disable connectivity check (network may not be available in container)
+    CONNECTIVITY_CHECK_URIS = ""
 
     # Recipe(s) to rebuild from source using Yocto layers.
-    HYBRID_REBUILD_PN ?= "busybox"
-
+    # Using Debian's busybox, so only building simple demo packages
+    HYBRID_REBUILD_PN ?= "hybrid-demo-utils"
+    
+    # Exclude ISAR-specific recipes from Yocto build (they're only for ISAR)
+    BBMASK += "meta-hybrid-demo/recipes-core/images/.*"
+    BBMASK += "meta-hybrid-demo/recipes-core/isar-mmdebstrap/.*"
+    

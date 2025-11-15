@@ -10,25 +10,52 @@ header:
     - repo: isar
       file: kas/image/isar-image-base.yaml
     - repo: isar
-      file: kas/opt/mirror-debian.yaml
-    - repo: isar
       file: kas/package/packages-distro.yaml
+    - repo: isar
+      file: kas/opt/user-root.yaml
 
 machine: qemuarm64
 
 repos:
   isar:
     url: https://github.com/ilbers/isar
-    refspec: master
+    branch: master
     path: isar
+    layers:
+      meta:
+      meta-isar:
+      meta-test:
+  meta-hybrid-demo:
+    url: https://github.com/osamakader/meta-hybrid-demo
+    branch: master
+    path: meta-hybrid-demo
+    layers:
+      .:
 
 local_conf_header:
+  local-repo: |
+    LOCAL_APT_REPO := "file:///repo/isar-yocto-hybrid-demo/integration/local-apt"
+    # Add local APT repo to sources for mmdebstrap
+    # Explicitly include both default Debian sources and our local repo
+    # The default is conf/distro/debian-bookworm.list (from debian-common.conf)
+    DISTRO_APT_SOURCES = "conf/distro/debian-bookworm.list /repo/isar-yocto-hybrid-demo/integration/conf/distro/local-apt.list"
+    DISTRO_APT_PREFERENCES += "/repo/isar-yocto-hybrid-demo/integration/conf/distro/local-apt.pref"
+  masking: |
+    # Mask Yocto-only recipes from ISAR build (these are built with Yocto and added via local APT repo)
+    BBMASK += "meta-hybrid-demo/recipes-core/hybrid-demo-utils/.*\.bb$"
+    BBMASK += "meta-hybrid-demo/recipes-core/nlohmann-json/.*\.bb$"
+    # Also mask .bbappend files for these recipes
+    BBMASK += "meta-hybrid-demo/recipes-core/(busybox|libxcrypt)/.*\.bbappend"
+
   mirrors: |
-    MIRROR_DEBIAN_URL = "http://deb.debian.org/debian"
-    MIRROR_DEBIAN_SECURITY_URL = "http://deb.debian.org/debian-security"
-    MIRROR_DEBIAN_BACKPORTS_URL = "http://deb.debian.org/debian"
+    DISTRO_APT_PREMIRRORS = ""
+    MIRROR_DEBIAN_URL = "http://deb.debian.org"
+    MIRROR_DEBIAN_SECURITY_URL = "http://deb.debian.org"
+    MIRROR_DEBIAN_BACKPORTS_URL = "http://deb.debian.org"
   kernel: |
     DISTRO_KERNELS ?= "arm64"
     KAS_IMAGE_PREINSTALL = "linux-image-arm64"
+  users: |
+    KAS_USER_ROOT_PASSWORD = "root"
 
 target: isar-image-base
