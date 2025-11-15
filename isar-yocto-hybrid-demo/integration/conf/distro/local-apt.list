@@ -1,2 +1,0 @@
-deb [trusted=yes] file:///repo/isar-yocto-hybrid-demo/integration/local-apt bookworm main
-

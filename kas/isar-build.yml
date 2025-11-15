@@ -34,12 +34,12 @@ repos:
 
 local_conf_header:
   local-repo: |
-    LOCAL_APT_REPO := "file:///repo/isar-yocto-hybrid-demo/integration/local-apt"
+    LOCAL_APT_REPO := "file:///repo/yocto-bridge/integration/local-apt"
     # Add local APT repo to sources for mmdebstrap
     # Explicitly include both default Debian sources and our local repo
     # The default is conf/distro/debian-bookworm.list (from debian-common.conf)
-    DISTRO_APT_SOURCES = "conf/distro/debian-bookworm.list /repo/isar-yocto-hybrid-demo/integration/conf/distro/local-apt.list"
-    DISTRO_APT_PREFERENCES += "/repo/isar-yocto-hybrid-demo/integration/conf/distro/local-apt.pref"
+    DISTRO_APT_SOURCES = "conf/distro/debian-bookworm.list /repo/yocto-bridge/integration/conf/distro/local-apt.list"
+    DISTRO_APT_PREFERENCES += "/repo/yocto-bridge/integration/conf/distro/local-apt.pref"
   masking: |
     # Mask Yocto-only recipes from ISAR build (these are built with Yocto and added via local APT repo)
     BBMASK += "meta-hybrid-demo/recipes-core/hybrid-demo-utils/.*\.bb$"
