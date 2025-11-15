@@ -1,2 +1,2 @@
-deb [trusted=yes] file:///repo/yocto-bridge/integration/local-apt bookworm main
+deb [trusted=yes] file:///repo/integration/local-apt bookworm main
 

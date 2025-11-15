@@ -14,7 +14,7 @@ This project demonstrates how to reuse Debian prebuilt packages with ISAR while 
 3. Publish the generated `.deb` packages into the local APT repo:\
    `integration/scripts/publish-yocto-debs.sh`
 4. Build hybrid container: `docker build -t kas-hy .`.
-5. Build the Debian base image with ISAR: `./scripts/build-isar.sh build --runtime-args "--privileged"`.
+5. Build the Debian base image with ISAR: `./scripts/build-isar.sh build `.
 6. Boot under QEMU to validate.
 
 ## Local APT Repository

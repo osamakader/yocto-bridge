@@ -8,12 +8,10 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-# KAS creates 'build/' in the current working directory
-# We use a separate directory to isolate Yocto builds
+
 BUILD_DIR="${ROOT_DIR}/build-yocto"
 mkdir -p "${BUILD_DIR}"
 cd "${BUILD_DIR}"
 
-# Run kas - it will create build/ in this directory
-KAS_CONTAINER_IMAGE=kas-hy kas-container "$@" "${ROOT_DIR}/kas/yocto-bridge.yml"
+kas "$@" "${ROOT_DIR}/kas/yocto-bridge.yml"
 
