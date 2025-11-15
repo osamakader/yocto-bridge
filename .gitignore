@@ -7,7 +7,6 @@ sstate-cache/
 downloads/
 integration/local-apt/dists/
 integration/local-apt/pool/
-meta-hybrid-demo/
 # External layers cloned by kas
 isar/
 poky/
