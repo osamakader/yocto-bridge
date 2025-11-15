@@ -1,0 +1,3 @@
+[submodule "meta-hybrid-demo"]
+	path = meta-hybrid-demo
+	url = https://github.com/osamakader/meta-hybrid-demo.git
