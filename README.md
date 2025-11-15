@@ -10,11 +10,11 @@ This project demonstrates how to reuse Debian prebuilt packages with ISAR while 
 
 ## Quickstart
 1. Install KAS and prerequisites: `pip install kas`.
-2. Fetch sources for selective rebuilds: `kas shell kas/yocto-bridge.yml`.
-3. Build the Yocto component you want to override (currently `hybrid-demo-utils`): `bitbake hybrid-demo-utils`.
-4. Publish the generated `.deb` packages into the local APT repo:\
+3. Build the Yocto component you want to override (e.g. `hybrid-demo-utils`): `./scripts/build-yocto.sh shell  -c "bitbake hybrid-demo-utils"`.
+3. Publish the generated `.deb` packages into the local APT repo:\
    `integration/scripts/publish-yocto-debs.sh`
-5. Build the Debian base image with ISAR: `kas build kas/isar-build.yml`.
+4. Build hybrid container: `docker build -t kas-hy .`.
+5. Build the Debian base image with ISAR: `./scripts/build-isar.sh build --runtime-args "--privileged"`.
 6. Boot under QEMU to validate.
 
 ## Local APT Repository
@@ -32,3 +32,8 @@ The `meta-hybrid-demo` directory is a separate GitHub repository. If you're sett
 - Automate `kas build kas/isar-build.yml` followed by the hybrid Yocto step in CI to prove reuse metrics.
 - Extend scripts to push Yocto-built `.deb` packages into a `reprepro` repository consumed by ISAR.
 
+[ISAR](https://github.com/ilbers/isar)
+
+[Yocto Project](https://www.yoctoproject.org/)
+
+[yocto-bridge](https://github.com/osamakader/yocto-bridge)

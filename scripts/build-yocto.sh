@@ -15,5 +15,5 @@ mkdir -p "${BUILD_DIR}"
 cd "${BUILD_DIR}"
 
 # Run kas - it will create build/ in this directory
-kas "$@" "${ROOT_DIR}/kas/yocto-bridge.yml"
+KAS_CONTAINER_IMAGE=kas-hy kas-container "$@" "${ROOT_DIR}/kas/yocto-bridge.yml"
 
